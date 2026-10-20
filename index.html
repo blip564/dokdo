@@ -1,0 +1,507 @@
+<title>독도 반박 토론장</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+/* Layout: 해 뜨는 독도 그림 배너 → 안내 띠 → 왼쪽 토론 대화와 3단계 반박 쓰기, 오른쪽 근거 노트. 좁은 화면에서는 위아래로 쌓임 */
+:root{
+  --bg:#edf4f7; --surface:#ffffff; --ink:#122430; --muted:#58707c;
+  --sea:#0d5b80; --sea-soft:#dbecf4; --jp:#f5f0ea; --jp-line:#d9cfc3;
+  --sun:#d4842a; --sun-soft:#fcefdf; --line:#d3e1e8; --ok:#2c7a4c; --ok-soft:#e1f2e8;
+  --sky1:#b9dcee; --sky2:#fde5c7; --disc:#f7b553; --sea1:#3b93ba; --sea2:#0d5b80; --foam:#e9f6fb;
+  --rock:#7a6455; --rock2:#54443a; --grass:#79a250; --shadow:0 8px 24px rgba(13,91,128,.10);
+  --display:"Jua","Noto Sans KR",system-ui,sans-serif;
+  --body:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0a1820; --surface:#10232e; --ink:#e3eef3; --muted:#92aab6;
+  --sea:#62b6dc; --sea-soft:#15384a; --jp:#2a2622; --jp-line:#4b433b;
+  --sun:#f0a650; --sun-soft:#3a2a17; --line:#22404f; --ok:#6cc58f; --ok-soft:#163a25;
+  --sky1:#0c2131; --sky2:#3a4560; --disc:#f2cf8e; --sea1:#1d5674; --sea2:#0b2f42; --foam:#7fb6cf;
+  --rock:#5c4a3f; --rock2:#3b2f28; --grass:#4f7337; --shadow:0 8px 24px rgba(0,0,0,.35); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0a1820; --surface:#10232e; --ink:#e3eef3; --muted:#92aab6;
+  --sea:#62b6dc; --sea-soft:#15384a; --jp:#2a2622; --jp-line:#4b433b;
+  --sun:#f0a650; --sun-soft:#3a2a17; --line:#22404f; --ok:#6cc58f; --ok-soft:#163a25;
+  --sky1:#0c2131; --sky2:#3a4560; --disc:#f2cf8e; --sea1:#1d5674; --sea2:#0b2f42; --foam:#7fb6cf;
+  --rock:#5c4a3f; --rock2:#3b2f28; --grass:#4f7337; --shadow:0 8px 24px rgba(0,0,0,.35); color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:16px 48px}
+.wrap{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+
+/* 배너 */
+.hero{position:relative;border-radius:22px;overflow:hidden;min-height:clamp(260px,34vw,360px);box-shadow:var(--shadow);isolation:isolate}
+.hero svg{position:absolute;inset:0;width:100%;height:100%;z-index:-1}
+.hero-in{position:relative;display:flex;flex-direction:column;justify-content:space-between;gap:16px;min-height:inherit;padding:clamp(18px,3vw,30px)}
+.hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--sea);margin:0}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(34px,6vw,58px);line-height:1.05;margin:4px 0 0;color:var(--ink);text-wrap:balance}
+.sub{margin:8px 0 0;color:var(--ink);max-width:30ch;font-weight:500}
+.tools{display:flex;gap:8px;flex-wrap:wrap}
+.tools button{background:color-mix(in srgb,var(--surface) 82%,transparent);backdrop-filter:blur(6px)}
+.facts{display:flex;gap:6px;flex-wrap:wrap;margin:0;padding:0;list-style:none}
+.facts li{font-size:13px;padding:4px 11px;border-radius:999px;background:color-mix(in srgb,var(--surface) 85%,transparent);color:var(--ink);font-variant-numeric:tabular-nums;backdrop-filter:blur(6px)}
+.facts b{color:var(--sea)}
+@media (prefers-reduced-motion:no-preference){
+  .wave{animation:drift 9s ease-in-out infinite alternate}.wave.w2{animation-duration:12s;animation-direction:alternate-reverse}
+  @keyframes drift{from{transform:translateX(-24px)}to{transform:translateX(24px)}}
+  .gull{animation:fly 6s ease-in-out infinite alternate}@keyframes fly{from{transform:translate(0,0)}to{transform:translate(14px,-8px)}}}
+
+.notice{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--sea);border-radius:12px;padding:12px 16px;font-size:15px}
+.notice b{color:var(--sea)}
+
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:18px;align-items:start}
+@media (max-width:880px){.grid{grid-template-columns:minmax(0,1fr)}}
+.chat{background:var(--surface);border:1px solid var(--line);border-radius:18px;display:flex;flex-direction:column;min-width:0;box-shadow:var(--shadow);overflow:hidden}
+.chat-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 16px;background:var(--jp);border-bottom:1px solid var(--jp-line);flex-wrap:wrap}
+.who{display:flex;gap:10px;align-items:center}
+.who strong{font-family:var(--display);font-weight:400;font-size:18px;display:block;line-height:1.2}
+.who small{font-size:12px;color:var(--muted)}
+.av{flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-size:15px}
+.av.jpv{background:var(--surface);border:1px solid var(--jp-line);color:var(--ink)}
+.av.krv{background:var(--sea);color:var(--surface)}
+.round{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums;background:var(--surface);border:1px solid var(--jp-line);border-radius:999px;padding:2px 10px}
+#log{padding:18px 16px;display:flex;flex-direction:column;gap:16px;min-height:300px;max-height:52vh;overflow-y:auto}
+.msg{max-width:90%;display:flex;gap:8px;align-items:flex-start}
+.msg .col{display:flex;flex-direction:column;gap:3px;min-width:0}
+.msg .name{font-size:13px;color:var(--muted)}
+.bubble{padding:12px 15px;border-radius:16px;white-space:pre-wrap;word-break:keep-all;overflow-wrap:anywhere;font-size:17px}
+.jp{align-self:flex-start}.jp .bubble{background:var(--jp);border:1px solid var(--jp-line);border-top-left-radius:4px}
+.kr{align-self:flex-end;flex-direction:row-reverse}.kr .col{align-items:flex-end}.kr .bubble{background:var(--sea);color:var(--surface);border-top-right-radius:4px}
+.thinking{color:var(--muted);font-style:italic}
+.err{align-self:center;font-size:14px;color:var(--sun);text-align:center;margin:0}
+.quick{display:flex;flex-wrap:wrap;gap:8px;padding:0 16px 10px;align-items:center}
+.qlabel{font-size:12px;color:var(--muted);letter-spacing:.06em;font-weight:700}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:8px 14px}
+button:hover:not(:disabled){border-color:var(--sea)}
+button:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+button:disabled{opacity:.5;cursor:default}
+.primary{background:var(--sea);color:var(--surface);border-color:var(--sea);font-weight:700;padding:10px 22px;font-size:17px}
+.chip{border-radius:999px;font-size:14px;padding:6px 12px}
+.steps-bar{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.steps-bar li{font-size:14px;padding:5px 12px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+.steps-bar li.done{color:var(--ok);border-color:var(--ok);background:var(--ok-soft)}
+.steps-bar li.done::before{content:"✓ "}
+.steps-bar li.now{color:var(--ink);border-color:var(--sea);background:var(--sea-soft);font-weight:700}
+.end{background:var(--sun);border-color:var(--sun);color:#1b1206;font-weight:700}
+
+/* 3단계 반박 쓰기 */
+.compose{border-top:1px solid var(--line);background:color-mix(in srgb,var(--sea-soft) 45%,var(--surface));padding:16px;display:flex;flex-direction:column;gap:10px}
+.compose-top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.compose-top h3{font-family:var(--display);font-weight:400;font-size:21px;margin:0;color:var(--sea)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;border-radius:0;padding:5px 12px;font-size:14px}
+.seg button[aria-pressed="true"]{background:var(--sea);color:var(--surface)}
+.step{display:grid;grid-template-columns:72px minmax(0,1fr);gap:10px;align-items:start}
+.step label{font-family:var(--display);font-size:18px;padding-top:8px;color:var(--ink);display:flex;flex-direction:column;line-height:1.2}
+.step label small{font-family:var(--body);font-size:12px;color:var(--muted);margin-top:2px}
+@media (max-width:480px){.step{grid-template-columns:minmax(0,1fr);gap:4px}.step label{padding-top:0;flex-direction:row;gap:6px;align-items:baseline}}
+textarea{width:100%;min-width:0;resize:vertical;min-height:48px;font:inherit;font-size:17px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.checks{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.ck{font-size:13px;padding:3px 10px;border-radius:999px;border:1px dashed var(--muted);color:var(--muted);background:var(--surface)}
+.ck.on{border-style:solid;border-color:var(--ok);background:var(--ok-soft);color:var(--ok);font-weight:700}
+.send-row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+
+aside{display:flex;flex-direction:column;gap:10px;min-width:0}
+aside h2{font-family:var(--display);font-weight:400;font-size:24px;margin:0;color:var(--sea);display:flex;align-items:center;gap:8px}
+aside h2 svg{flex:none}
+aside .hint{margin:0;font-size:14px;color:var(--muted)}
+.think{background:var(--sun-soft);border-radius:14px;padding:12px 14px}
+.think .lab{font-size:12px;font-weight:700;color:var(--sun);letter-spacing:.06em}
+.think p{margin:4px 0 0;font-size:15px}
+.hintbox{margin-top:8px}.hintbox summary{cursor:pointer;font-size:14px;font-weight:700;color:var(--sun)}
+.think ul{margin:6px 0 0;padding-left:18px;font-size:15px;display:flex;flex-direction:column;gap:4px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:11px 13px;text-align:left;display:flex;flex-direction:column;gap:2px;width:100%;position:relative;transition:transform .15s,border-color .15s}
+.card:hover{border-color:var(--sea)}
+@media (prefers-reduced-motion:no-preference){.card:hover{transform:translateY(-2px)}}
+.card .yr{font-size:13px;color:var(--sun);font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.card .t{font-weight:700;font-size:16px}
+.card .d{font-size:14px;color:var(--muted)}
+.card .add{font-size:12px;color:var(--sea);font-weight:700;margin-top:4px}
+
+#review{background:var(--surface);border:2px solid var(--ok);border-radius:18px;padding:18px 20px;box-shadow:var(--shadow)}
+#review h2{font-family:var(--display);font-weight:400;margin:0 0 6px;color:var(--ok);font-size:26px}
+#reviewText{font-size:16px}
+.rv-h{font-family:var(--display);font-weight:400;font-size:19px;margin:16px 0 6px;color:var(--ink)}
+.tbl-wrap{overflow-x:auto}
+.rv-table{border-collapse:collapse;width:100%;min-width:560px;font-size:15px}
+.rv-table th,.rv-table td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+.rv-table th{background:var(--sea-soft);color:var(--sea);font-weight:700}
+.rv-claim{font-weight:700;white-space:nowrap}
+.rv-star{color:var(--sun);font-size:18px;white-space:nowrap;letter-spacing:.05em}
+.rv-list{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.rv-p{margin:0}
+.rv-miss{margin:14px 0 0;font-weight:700;color:var(--sea)}
+.rv-cheer{margin:8px 0 0;font-family:var(--display);font-size:20px;color:var(--ok)}
+.big .bubble{font-size:21px}
+.big textarea{font-size:20px}
+@media (prefers-reduced-motion:no-preference){.msg{animation:in .25s ease-out}@keyframes in{from{transform:translateY(4px)}to{transform:none}}}
+</style>
+
+<div class="wrap">
+  <header class="hero">
+    <svg viewBox="0 0 1200 380" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--sky1)"/><stop offset="1" style="stop-color:var(--sky2)"/></linearGradient>
+        <linearGradient id="seaG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--sea1)"/><stop offset="1" style="stop-color:var(--sea2)"/></linearGradient>
+        <radialGradient id="glow" cx=".5" cy=".5" r=".5"><stop offset="0" style="stop-color:var(--disc);stop-opacity:.55"/><stop offset="1" style="stop-color:var(--disc);stop-opacity:0"/></radialGradient>
+      </defs>
+      <rect width="1200" height="380" fill="url(#sky)"/>
+      <circle cx="960" cy="268" r="150" fill="url(#glow)"/>
+      <circle cx="960" cy="268" r="44" style="fill:var(--disc)"/>
+      <g class="gull" fill="none" style="stroke:var(--ink)" stroke-width="2.5" stroke-linecap="round" opacity=".55">
+        <path d="M700 120 q10 -10 20 0 q10 -10 20 0"/><path d="M760 92 q7 -7 14 0 q7 -7 14 0"/><path d="M820 134 q6 -6 12 0 q6 -6 12 0"/>
+      </g>
+      <!-- 서도 -->
+      <path d="M470 292 L486 268 L500 238 L512 204 L522 170 L532 142 L542 118 L552 102 L562 112 L570 134 L580 150 L592 142 L602 164 L614 198 L628 238 L642 268 L660 292 Z" style="fill:var(--rock)"/>
+      <path d="M552 102 L562 112 L570 134 L580 150 L592 142 L602 164 L614 198 L628 238 L642 268 L660 292 L590 292 L582 238 L572 196 L566 160 Z" style="fill:var(--rock2)" opacity=".7"/>
+      <path d="M512 204 q20 -6 38 4 M532 150 q14 -4 26 6" fill="none" style="stroke:var(--grass)" stroke-width="5" stroke-linecap="round" opacity=".8"/>
+      <!-- 사이 바위 -->
+      <path d="M662 292 L672 274 L684 292 Z M684 292 L692 280 L702 292 Z" style="fill:var(--rock2)"/>
+      <!-- 동도 -->
+      <path d="M706 292 L720 266 L736 238 L752 216 L770 202 L792 194 L816 192 L838 196 L856 208 L870 230 L884 258 L900 292 Z" style="fill:var(--rock)"/>
+      <path d="M816 192 L838 196 L856 208 L870 230 L884 258 L900 292 L836 292 L830 240 Z" style="fill:var(--rock2)" opacity=".7"/>
+      <path d="M752 214 q30 -18 62 -20 q24 0 40 12" fill="none" style="stroke:var(--grass)" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+      <rect x="806" y="168" width="11" height="26" rx="2" style="fill:var(--foam)"/>
+      <rect x="804" y="164" width="15" height="6" rx="2" style="fill:var(--sun)"/>
+      <!-- 바다 -->
+      <rect y="290" width="1200" height="90" fill="url(#seaG)"/>
+      <path d="M560 300 h70 M740 302 h120 M900 310 h80" style="stroke:var(--disc)" stroke-width="3" stroke-linecap="round" opacity=".55"/>
+      <g class="wave"><path d="M-40 318 q30 -10 60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0" fill="none" style="stroke:var(--foam)" stroke-width="3" opacity=".5"/></g>
+      <g class="wave w2"><path d="M-40 346 q40 -12 80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0 t80 0" fill="none" style="stroke:var(--foam)" stroke-width="3" opacity=".35"/></g>
+      <text x="565" y="86" text-anchor="middle" font-size="16" style="fill:var(--ink);font-family:var(--body);font-weight:700" opacity=".7">서도</text>
+      <text x="806" y="150" text-anchor="middle" font-size="16" style="fill:var(--ink);font-family:var(--body);font-weight:700" opacity=".7">동도</text>
+    </svg>
+    <div class="hero-in">
+      <div class="hero-top">
+        <div>
+          <p class="eyebrow">6학년 독도 교육 · 반박 토론</p>
+          <h1>독도 반박 토론장</h1>
+          <p class="sub">일본 측 토론자의 주장을 듣고, 내 생각과 근거로 반박해 봐요.</p>
+        </div>
+        <div class="tools">
+          <button id="bigBtn" type="button">글씨 크게</button>
+          <button id="resetBtn" type="button">처음부터</button>
+        </div>
+      </div>
+      <ul class="facts">
+        <li><b>주소</b> 경상북도 울릉군 울릉읍 독도리</li>
+        <li><b>울릉도에서</b> 87.4km</li>
+        <li><b>섬</b> 동도·서도와 89개 부속 섬</li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="notice">
+    <b>역할극 안내</b> · AI가 <b>일본 정부가 실제로 내세우는 주장</b>을 대신 말하는 연습 상대예요. 이 주장들은 일본 측 입장이고, <b>독도는 역사적·지리적·국제법적으로 대한민국 영토</b>예요. AI는 진짜 상대편처럼 당당하게 주장하고 반론해요. 힌트는 주지 않아요. 공부한 내용을 떠올려 <b>왜 그 자료가 반박이 되는지 내 말로 설명</b>해 보세요!
+  </div>
+
+  <div class="grid">
+    <section class="chat" aria-label="토론 대화">
+      <div class="chat-head">
+        <div class="who"><span class="av jpv">일</span><div><strong>일본 측 토론자</strong><small>AI 역할극 상대</small></div></div>
+        <span class="round" id="round">반박 0회</span>
+      </div>
+      <div id="log" aria-live="polite"></div>
+      <div class="quick">
+        <span class="qlabel">토론 순서</span>
+        <ol class="steps-bar" aria-label="토론 순서">
+          <li data-claim="1">① 무주지 편입</li>
+          <li data-claim="2">② 샌프란시스코 조약</li>
+          <li data-claim="3">③ 러스크 서한</li>
+          <li data-claim="4">④ 국제사법재판소</li>
+        </ol>
+      </div>
+      <div class="quick">
+        <button class="chip" type="button" data-q="그 주장을 다시 쉽게 설명해 주세요.">다시 설명해 주세요</button>
+        <button class="chip end" type="button" id="endBtn">토론 마치고 평가 받기</button>
+      </div>
+
+      <form class="compose" id="form">
+        <div class="compose-top">
+          <h3>내 반박 쓰기</h3>
+          <div class="seg" role="group" aria-label="쓰는 방식">
+            <button type="button" id="modeSteps" aria-pressed="true">3단계로</button>
+            <button type="button" id="modeFree" aria-pressed="false">자유롭게</button>
+          </div>
+        </div>
+        <div id="steps" style="display:flex;flex-direction:column;gap:8px">
+          <div class="step"><label for="s1">주장<small>내 생각</small></label>
+            <textarea id="s1" placeholder="예) 일본의 주장은 틀렸어요. 1905년의 독도는 ○○○였기 때문이에요."></textarea></div>
+          <div class="step"><label for="s2">근거<small>어떤 자료?</small></label>
+            <textarea id="s2" placeholder="어떤 자료가 내 생각을 뒷받침하나요? 근거 노트를 눌러 자료 이름을 넣을 수 있어요."></textarea></div>
+          <div class="step"><label for="s3">설명<small>그래서 왜?</small></label>
+            <textarea id="s3" placeholder="그 자료가 왜 일본 주장을 반박하는지 내 말로 설명해요. ('그러니까', '왜냐하면'을 써 보세요)"></textarea></div>
+        </div>
+        <div id="free" hidden>
+          <textarea id="f1" aria-label="자유롭게 반박 쓰기" style="min-height:110px" placeholder="실제 토론처럼 내 생각과 근거, 설명을 이어서 말해 보세요."></textarea>
+        </div>
+        <div class="send-row">
+          <div class="checks" aria-label="내 반박 점검">
+            <span class="ck" id="ckClaim">내 생각</span>
+            <span class="ck" id="ckEvid">근거</span>
+            <span class="ck" id="ckWhy">설명</span>
+          </div>
+          <button class="primary" id="sendBtn" type="submit">반박하기</button>
+        </div>
+      </form>
+    </section>
+
+    <aside>
+      <h2><svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><path d="M4 20 L8 13 L11 7 L13 10 L15 9 L18 15 L21 20 Z" style="fill:var(--rock)"/><rect x="2" y="19" width="22" height="4" rx="2" style="fill:var(--sea)"/></svg>근거 노트</h2>
+      <div class="think" id="think"></div>
+      <p class="hint">자료를 누르면 '근거' 칸에 자료 이름만 들어가요. 그 자료가 왜 반박이 되는지는 직접 써 보세요.</p>
+      <div id="cards" style="display:flex;flex-direction:column;gap:8px"></div>
+    </aside>
+  </div>
+
+  <section id="review" hidden>
+    <h2>선생님 평가</h2>
+    <div id="reviewText"></div>
+  </section>
+</div>
+
+<script>
+const CARDS=[
+ {yr:"512년",t:"이사부와 우산국",d:"신라 이사부가 우산국을 신라에 복속시켰어요. 우산국은 울릉도와 그 주변 섬을 다스리던 나라예요."},
+ {yr:"1454년",t:"세종실록 지리지",d:"우산과 무릉 두 섬은 서로 멀지 않아 날씨가 맑으면 바라볼 수 있다고 적혀 있어요."},
+ {yr:"1693·1696년",t:"안용복",d:"일본에 건너가 울릉도와 독도가 조선 땅이라고 따졌어요. 1696년 일본 막부는 일본 사람이 울릉도에 건너가는 것을 금지했어요."},
+ {yr:"1877년",t:"태정관 지령",d:"일본 최고 국가기관인 태정관이 '울릉도 외 1도는 일본과 관계없다'고 지시했어요."},
+ {yr:"1900년",t:"대한제국 칙령 제41호",d:"울릉도를 울도군으로 높이고, 울도군이 울릉도·죽도·석도를 다스린다고 발표했어요. 석도는 독도예요."}
+];
+
+const THINK={
+ 1:{t:"주장 ① 무주지 편입",c:"1905년 일본은 독도가 주인 없는 섬(무주지)이라 먼저 차지했다고 해요.",q:["1905년보다 먼저 독도의 주인이 있었다는 기록이 있을까?","일본 스스로 독도가 일본과 관계없다고 한 적은 없을까?","일본은 편입할 때 대한제국에 알렸을까?"]},
+ 2:{t:"주장 ② 샌프란시스코 조약",c:"조약에 제주도·거문도·울릉도는 적혀 있는데 독도는 없으니 일본 땅이라고 해요.",q:["우리나라 섬은 모두 몇 개쯤 될까? 조약에 다 적을 수 있을까?","조약에 이름이 없는 다른 섬들도 모두 일본 땅이 될까?","독도는 어느 섬에 딸린 섬일까?"]},
+ 3:{t:"주장 ③ 러스크 서한",c:"1951년 미국 관리 러스크가 한국의 요청을 거절한 편지가 있으니, 미국도 동의했다고 해요.",q:["그 편지는 모두에게 공개된 문서였을까?","한국은 그 편지 내용에 동의했을까?","조약은 미국 혼자 정한 걸까, 여러 나라가 함께 정한 걸까?"]},
+ 4:{t:"주장 ④ 국제사법재판소",c:"일본은 세 번이나 재판하자고 했는데 한국이 거절했다고 해요.",q:["우리 집을 이웃이 재판으로 따지자고 하면 꼭 응해야 할까?","지금 독도는 어느 나라가 실제로 다스리고 있을까?","분명한 우리 땅을 재판에 맡기면 어떤 문제가 생길까?"]}
+};
+
+const RULES=`너는 초등학교 6학년 독도 교육 수업에서 학생들의 토론 연습 상대 역할을 한다. 선생님이 이 역할극을 준비했다. 선생님의 목표는 학생들이 자료 이름을 외워 말하는 것이 아니라, 자기 생각과 근거를 자기 말로 설명할 줄 알게 되는 것이다.
+
+[역할]
+너는 "일본 측 토론자"다. 실제 토론 대회에 나온 일본 측 대표처럼, 일본의 입장에서 1인칭으로 당당하게 주장한다. "일본 정부는 ~라고 보았어요"처럼 남의 이야기를 전하듯 말하지 말고, "일본은 1905년에 다케시마를 정식으로 편입했습니다. 그러므로 다케시마는 일본 땅입니다."처럼 직접 주장한다. 섬 이름은 '다케시마'라고 부른다. 학생들은 이미 수업에서 공부를 마쳤고, 한국 측 근거로 반박한다. 너는 학생들의 선생님이 아니라 상대편 토론자다.
+
+[수업에서 배운 일본 측 주장 4가지 — 이 네 가지만 다룬다]
+주장 ① 무주지 편입: 1905년 1월 일본 내각은 '다른 나라가 이 섬을 차지한 흔적이 없다'며 다케시마를 주인 없는 섬(무주지)으로 보고, 2월 시마네현 고시 제40호로 시마네현에 편입했다. 그래서 국제법에 맞게 일본 땅이 되었다.
+  - 일본 측 재반론: 한국 옛 기록의 '우산'은 독도가 아니라 울릉도나 다른 섬이다 / 칙령 제41호의 '석도'가 독도라는 증거가 없다 / 태정관 지령은 울릉도에 관한 것이다.
+주장 ② 샌프란시스코 강화 조약(1951): 조약 제2조에서 일본이 포기한 한국 땅은 '제주도, 거문도, 울릉도를 포함한 한국'이다. 독도는 들어 있지 않으니 일본 땅으로 남았다.
+  - 재반론: 한국이 독도를 넣어 달라고 했는데도 빠졌다는 점이 중요하다.
+주장 ③ 러스크 서한: 1951년 한국이 샌프란시스코 조약 초안에 독도를 한국 땅으로 넣어 달라고 미국에 요청했다. 미국 국무부 러스크 차관보는 8월 10일 편지(러스크 서한)에서 독도는 한국 땅으로 다뤄진 적이 없다며 거절했다. 미국도 일본 땅이라는 데 동의한 것이다.
+  - 재반론: 미국은 조약을 만든 중심 나라였다.
+주장 ④ 국제사법재판소: 일본은 1954년, 1962년, 2012년 세 번 국제사법재판소(나라 사이 다툼을 판단하는 재판소)에서 해결하자고 제안했지만 한국이 모두 거절했다. 자신 있다면 재판을 받으면 된다.
+  - 재반론: 평화적으로 법에 따라 해결하자는 것이다.
+
+[학생들이 배운 한국 측 근거]
+이사부와 우산국(512년), 세종실록 지리지(1454년), 안용복(1693·1696년), 태정관 지령(1877년), 대한제국 칙령 제41호(1900년). 그리고 위 4가지 주장에 대한 반박(이미 주인 있는 땅을 몰래 편입했다, 조약에는 대표 섬만 적혔다, 러스크 서한은 비공개 편지이고 한 나라의 의견일 뿐이다, 분명한 우리 땅이라 재판에 갈 이유가 없다 등)을 영상으로 배웠다.
+
+[대답하는 방법 — 진짜 상대편 토론자처럼, 전체 2~4문장]
+1. 학생의 반박에 대한 짧은 반응 한 마디: 좋은 반박이면 토론자답게 "그 점은 인정하겠습니다." "날카로운 지적이네요." 정도로만 말한다. 선생님처럼 길게 칭찬하지 않는다. 근거가 약하면 "그것만으로는 증거가 되지 않습니다."처럼 받아친다.
+2. 일본 측 반론 또는 주장: 위의 재반론을 일본 입장에서 단호하게 말한다. 예) "하지만 한국 기록의 '우산'이 다케시마라는 증거는 없습니다. 울릉도를 다르게 부른 이름일 수도 있습니다."
+3. 도전하는 질문 하나로 끝낸다: 학생이 반박하도록 도전하되, 한국 측 근거나 답의 방향을 알려 주지 않는다. 좋은 예) "그렇다면 우산이 다케시마라는 증거를 대 보시겠습니까?", "이 주장을 반박할 수 있습니까?" 나쁜 예) "1905년보다 먼저 기록이 있었잖아요. 그 기록에서 이 섬을 뭐라고 불렀나요?" (힌트를 주는 질문은 절대 하지 않는다)
+
+[힌트 금지]
+- 학생들은 이미 공부를 마쳤다. 한국 측 근거의 이름(세종실록 지리지, 태정관 지령, 칙령 제41호 등)이나 반박 방향을 먼저 꺼내지 않는다. 학생이 말한 근거에 대해서만 반론한다.
+- 학생 대신 한국 측 반박을 말해 주거나 완성해 주지 않는다.
+- 학생이 "다시 설명해 주세요"라고 하면, 같은 주장을 일본 입장에서 더 쉬운 말로 다시 주장할 뿐, 반박 힌트는 덧붙이지 않는다.
+- 학생이 자료 이름만 말하면 "자료 이름만으로는 아무것도 증명되지 않습니다. 그 자료가 왜 다케시마가 한국 땅이라는 증거가 됩니까?"처럼 설명을 요구한다.
+
+[토론 진행]
+- 학생이 생각, 근거, 설명을 갖춰 잘 반박하면 "그 부분은 인정하겠습니다."라고 분명히 물러선다.
+- 한 주장에서 반론은 두 번까지만 한다. 그 뒤에는 "좋습니다, 이 주장은 여기까지 하겠습니다. 다음 주장입니다."라며 다음 주장으로 넘어간다. 학생이 이기는 경험을 하게 한다.
+- 학생이 틀린 사실을 말하면 일본 측 입장에서 "그건 사실과 다릅니다."라고 짚는다. 무엇이 맞는지 한국 측 답은 알려 주지 않는다.
+- 학생이 "누가 이겼어요?", "승부를 내 주세요"라고 하면 역할을 잠시 멈추고 "토론은 누가 이기는지보다 근거로 설명하는 게 더 중요해요. 아래 '토론 마치고 평가 받기'를 누르면 주장마다 별로 보여 줄게요!"라고 답한다.
+
+[말하는 방법]
+- 6학년이 알아듣는 쉬운 우리말. 말투는 토론 대회처럼 정중하고 단호한 "~습니다/~입니다"체를 쓴다.
+- 공도 정책, 실효적 지배, 영해, 해리 같은 어려운 말은 쓰지 않는다.
+- 새 주장을 말할 때는 맨 앞에 "주장 ②입니다."처럼 번호를 붙이고, 2~3문장으로 당당하게 주장한 뒤 도전하는 질문 하나로 끝낸다. 주장은 반드시 ①→②→③→④ 순서로 하나씩 차례대로 꺼낸다. 학생이 다른 번호를 말해도 순서를 지킨다. ④까지 모두 끝나면 "네 가지 주장을 모두 마쳤습니다. 아래 '토론 마치고 평가 받기'를 눌러 주세요."라고 말하고 더 이상 새 주장을 꺼내지 않는다.
+- 4가지 주장 말고 새로운 주장(어업 활동 등)은 꺼내지 않는다.
+- 마크다운(별표, 샵, 목록 기호)은 쓰지 않는다.
+
+[지켜야 할 것]
+- 위에 없는 내용을 지어내지 않는다.
+- 한국 사람이나 일본 사람 전체를 깎아내리는 말은 절대 하지 않는다. 학생이 욕설이나 사람을 비하하는 말을 하면 역할을 잠시 멈추고 "토론에서는 사람이 아니라 근거로 이겨요" 하고 부드럽게 안내한다.
+- 학생이 "진짜 정답이 뭐예요?"처럼 역할 밖 질문을 하면, 짧게 "이건 역할극이고, 대한민국 정부 입장은 독도가 역사적·지리적·국제법적으로 우리 고유 영토라는 것"이라고 말한 뒤 역할로 돌아온다.
+- 독도와 관계없는 이야기는 정중히 거절하고 토론으로 돌아온다.`;
+
+const OPENING="안녕하세요. 저는 일본 측 토론자입니다. 다케시마는 역사적으로도, 국제법으로도 분명한 일본 땅입니다. 오늘 네 가지 근거로 이것을 증명하겠습니다.\n\n주장 ①입니다. 1905년, 일본은 다케시마를 조사했지만 다른 나라가 이 섬을 차지했던 흔적은 전혀 없었습니다. 주인 없는 섬이었던 것입니다. 그래서 일본은 내각 결정을 거쳐 그해 2월 시마네현에 정식으로 편입했습니다. 주인 없는 섬을 먼저 차지했으니, 다케시마는 일본 땅입니다.\n\n이 주장을 반박할 수 있습니까?";
+
+const $=s=>document.querySelector(s);
+const log=$("#log"),sendBtn=$("#sendBtn"),endBtn=$("#endBtn"),roundEl=$("#round");
+const s1=$("#s1"),s2=$("#s2"),s3=$("#s3"),f1=$("#f1");
+let turns=[],busy=false,sample=null,available=true,ctl=null,rebuttals=0,mode="steps",claim=1,inClaim=0;
+const CIRCLE={"①":1,"②":2,"③":3,"④":4};
+
+function addMsg(role,text){
+  const m=document.createElement("div");m.className="msg "+(role==="assistant"?"jp":"kr");
+  const jp=role==="assistant";
+  const av=document.createElement("span");av.className="av "+(jp?"jpv":"krv");av.textContent=jp?"일":"우리";av.setAttribute("aria-hidden","true");
+  const col=document.createElement("div");col.className="col";
+  const n=document.createElement("span");n.className="name";n.textContent=jp?"일본 측 토론자":"우리 반";
+  const b=document.createElement("div");b.className="bubble";b.textContent=text;
+  col.append(n,b);m.append(av,col);log.append(m);log.scrollTop=log.scrollHeight;return b;
+}
+function addNote(text){const p=document.createElement("p");p.className="err";p.textContent=text;log.append(p);log.scrollTop=log.scrollHeight}
+function setBusy(v){busy=v;const off=v||!available;sendBtn.disabled=off;endBtn.disabled=off;document.querySelectorAll("[data-q]").forEach(b=>b.disabled=off)}
+
+function setClaim(n){
+  claim=n;inClaim=0;document.querySelectorAll(".steps-bar li").forEach(li=>{const k=+li.dataset.claim;li.className=k<n?"done":k===n?"now":"";if(k===n)li.setAttribute("aria-current","step");else li.removeAttribute("aria-current")});
+  const t=THINK[n],box=$("#think");box.textContent="";
+  const lab=document.createElement("div");lab.className="lab";lab.textContent="지금 토론 중 · "+t.t;
+  const p=document.createElement("p");p.textContent=t.c;
+  const det=document.createElement("details");det.className="hintbox";const sm=document.createElement("summary");sm.textContent="막히면 힌트 보기";det.append(sm);
+  const ul=document.createElement("ul");t.q.forEach(x=>{const li=document.createElement("li");li.textContent=x;ul.append(li)});
+  det.append(ul);box.append(lab,p,det);
+}
+function detectClaim(text){const m=text.match(/주장\s*([①②③④])/);if(m&&CIRCLE[m[1]]!==claim)setClaim(CIRCLE[m[1]]);else if(/모두 마쳤습니다/.test(text))document.querySelectorAll(".steps-bar li").forEach(li=>li.className="done")}
+
+function currentText(){
+  if(mode==="free")return f1.value.trim();
+  const a=s1.value.trim(),b=s2.value.trim(),c=s3.value.trim();
+  return [a&&("제 생각은요, "+a),b&&("근거는 "+b+"예요."),c&&("왜냐하면 "+c)].filter(Boolean).join("\n");
+}
+const EVID=/이사부|우산|세종실록|지리지|안용복|태정관|칙령|41호|석도|러스크|덜레스|조약|비공개|편지|경비대|섬|1900|1877|1454|1696|1693|512/;
+const WHY=/때문|왜냐하면|그래서|그러니까|그러므로|즉|이니까|라서|므로|뜻|이유/;
+function updateChecks(){
+  let hasClaim,hasEvid,hasWhy;
+  if(mode==="free"){const t=f1.value;hasClaim=t.trim().length>=10;hasEvid=EVID.test(t);hasWhy=WHY.test(t)&&t.length>=30}
+  else{hasClaim=s1.value.trim().length>=5;hasEvid=s2.value.trim().length>=2;hasWhy=s3.value.trim().length>=10}
+  $("#ckClaim").classList.toggle("on",hasClaim);$("#ckEvid").classList.toggle("on",hasEvid);$("#ckWhy").classList.toggle("on",hasWhy);
+  $("#ckClaim").textContent=(hasClaim?"✓ ":"")+"내 생각";$("#ckEvid").textContent=(hasEvid?"✓ ":"")+"근거";$("#ckWhy").textContent=(hasWhy?"✓ ":"")+"설명";
+}
+function clearInputs(){s1.value=s2.value=s3.value=f1.value="";updateChecks()}
+function setMode(m){
+  if(m===mode)return;
+  if(m==="free"){const t=currentText();if(t&&!f1.value.trim())f1.value=t}
+  mode=m;$("#steps").hidden=m!=="steps";$("#free").hidden=m!=="free";
+  $("#modeSteps").setAttribute("aria-pressed",String(m==="steps"));$("#modeFree").setAttribute("aria-pressed",String(m==="free"));
+  updateChecks();
+}
+
+function reset(){
+  turns=[{role:"assistant",content:OPENING}];rebuttals=0;roundEl.textContent="반박 0회";
+  log.textContent="";addMsg("assistant",OPENING);$("#review").hidden=true;clearInputs();setClaim(1);
+}
+function copyFor(code){
+  if(["not_granted","sampling_disabled","not_declared","capability_disabled"].includes(code))return"이 화면에서는 AI가 대답할 수 없어요. claude.ai에 로그인한 상태에서 열고, AI 사용을 허용해 주세요.";
+  if(code==="rate_limited")return"잠시 너무 많이 물어봤어요. 조금 뒤에 다시 보내 주세요.";
+  if(code==="session_expired")return"로그인이 끝났어요. 다시 로그인해 주세요.";
+  if(code==="refused")return"그 말에는 대답하기 어려워요. 근거를 들어 다시 말해 볼까요?";
+  return"연결이 잠깐 끊겼어요. 다시 보내 주세요.";
+}
+function disableAI(msg){available=false;setBusy(false);addNote(msg)}
+
+async function send(text,isStudent){
+  text=text.trim();if(!text||busy)return;
+  if(!sample){disableAI(copyFor("not_granted"));return}
+  addMsg("user",text);turns.push({role:"user",content:text});
+  if(isStudent){rebuttals++;inClaim++;roundEl.textContent="반박 "+rebuttals+"회";clearInputs()}
+  const bubble=addMsg("assistant","생각하는 중…");bubble.classList.add("thinking");
+  setBusy(true);ctl=new AbortController();
+  try{
+    const NEXT=["","②","③","④"];
+    const sendTurns=turns.slice(-20).map(t=>({...t}));
+    const last=sendTurns[sendTurns.length-1];
+    if(isStudent&&inClaim>=3)last.content+=claim<4?`\n\n(진행 안내: 이 주장에서 학생의 세 번째 반박이다. 이번 대답에서는 학생의 반박을 인정하고, 바로 다음 주장 ${NEXT[claim]}을 꺼낸다.)`:"\n\n(진행 안내: 마지막 주장에서 학생의 세 번째 반박이다. 이번 대답에서는 학생의 반박을 인정하고, 네 가지 주장을 모두 마쳤다고 말한다.)";
+    const {text:reply}=await sample([{role:"user",content:RULES},...sendTurns],{cache:false,modelTier:"quick",signal:ctl.signal,
+      onText:({text})=>{bubble.classList.remove("thinking");bubble.textContent=text;log.scrollTop=log.scrollHeight}});
+    bubble.textContent=reply;turns.push({role:"assistant",content:reply});detectClaim(reply);
+  }catch(e){
+    if(e.text){bubble.classList.remove("thinking");bubble.textContent=e.text;turns.push({role:"assistant",content:e.text})}
+    else bubble.closest(".msg").remove();
+    if(e.code!=="cancelled"){
+      if(["not_granted","sampling_disabled","not_declared","capability_disabled"].includes(e.code))disableAI(copyFor(e.code));
+      else addNote(copyFor(e.code));
+    }
+  }finally{setBusy(false)}
+}
+
+async function review(){
+  if(busy)return;if(!sample){disableAI(copyFor("not_granted"));return}
+  if(rebuttals===0){addNote("먼저 반박을 한 번 이상 써 보세요.");return}
+  const box=$("#review"),out=$("#reviewText");box.hidden=false;out.textContent="토론 내용을 정리하고 있어요…";
+  box.scrollIntoView({behavior:"smooth",block:"start"});
+  const transcript=turns.map(t=>(t.role==="user"?"학생: ":"일본 측 토론자: ")+t.content).join("\n\n");
+  const prompt=`너는 초등학교 6학년 담임 선생님이다. 학생들이 독도 수업에서 '일본 측 토론자' 역할의 AI와 반박 토론을 했다. 아래 대화를 읽고 토론 결과를 정리한다. 이 활동의 목표는 학생들이 '내 생각 + 근거 + 그 근거가 왜 반박이 되는지 설명'을 자기 말로 하는 것이다.
+
+다룰 수 있는 주장은 네 가지다: 1 무주지 편입(1905년), 2 샌프란시스코 조약, 3 러스크 서한, 4 국제사법재판소.
+학생들이 배운 근거: 이사부와 우산국, 세종실록 지리지, 안용복, 태정관 지령, 대한제국 칙령 제41호.
+
+JSON 하나만 답한다. 형식:
+{"rows":[{"claim":1,"jp":"일본 측 주장 한 문장","kr":"학생들이 실제로 말한 반박을 학생 말에 가깝게 한두 문장","stars":3}],
+ "good":["참 잘했어요 2~3개. 학생이 실제로 쓴 표현을 짚어 구체적으로"],
+ "grow":"설명을 더 키우면 좋을 반박 하나를 골라, 답 대신 생각해 볼 질문 하나",
+ "facts":["더 알아두면 좋은 사실 1~2개. 학생들이 배운 근거와 관련된 것, 6학년 수준, 각 한두 문장"],
+ "missing":[아직 반박하지 않은 주장 번호들],
+ "cheer":"따뜻한 마무리 한 문장"}
+
+규칙:
+- rows에는 대화에서 학생이 실제로 반박한 주장만 넣는다.
+- stars: 3 = 내 생각, 근거, 설명을 모두 갖춤 / 2 = 둘을 갖춤 / 1 = 하나만 있음.
+- 쉬운 존댓말. 지어낸 역사 사실은 쓰지 않는다. 학생이 틀린 사실을 말했다면 facts에서 부드럽게 바로잡는다.
+
+대화:
+${transcript.slice(-12000)}`;
+  setBusy(true);ctl=new AbortController();
+  try{
+    const r=await sample.json(prompt,{cache:false,signal:ctl.signal});
+    renderReview(r);
+  }catch(e){out.textContent=e.code==="invalid_json"?"정리가 잘 안 됐어요. 한 번 더 눌러 주세요.":copyFor(e.code)}
+  finally{setBusy(false)}
+}
+const CLAIM_NAMES={1:"① 1905년 무주지 편입",2:"② 샌프란시스코 조약",3:"③ 러스크 서한",4:"④ 국제사법재판소"};
+function el(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
+function renderReview(r){
+  const out=$("#reviewText");out.textContent="";
+  const rows=Array.isArray(r?.rows)?r.rows:[];
+  out.append(el("h3","rv-h","1. 우리가 나눈 주장과 반박"));
+  if(rows.length){
+    const wrap=el("div","tbl-wrap"),t=el("table","rv-table"),hd=el("tr");
+    ["주장","일본 측 주장","우리 반의 반박","반박 별점"].forEach(h=>hd.append(el("th",null,h)));
+    const thead=el("thead");thead.append(hd);t.append(thead);const tb=el("tbody");
+    rows.forEach(x=>{const tr=el("tr");const n=Math.max(1,Math.min(3,Number(x.stars)||1));
+      tr.append(el("td","rv-claim",CLAIM_NAMES[Number(x.claim)]||String(x.claim||"")),el("td",null,String(x.jp||"")),el("td",null,String(x.kr||"")),el("td","rv-star","★".repeat(n)+"☆".repeat(3-n)));
+      tb.append(tr)});
+    t.append(tb);wrap.append(t);out.append(wrap);
+  }
+  const list=(title,items)=>{if(!items||!items.length)return;out.append(el("h3","rv-h",title));const ul=el("ul","rv-list");items.forEach(i=>ul.append(el("li",null,String(i))));out.append(ul)};
+  list("2. 참 잘했어요!",r?.good);
+  if(r?.grow){out.append(el("h3","rv-h","3. 설명을 더 키우려면"));out.append(el("p","rv-p",String(r.grow)))}
+  list("4. 더 알아두면 좋은 사실",r?.facts);
+  const miss=(Array.isArray(r?.missing)?r.missing:[]).map(Number).filter(n=>CLAIM_NAMES[n]);
+  out.append(el("p","rv-miss",miss.length?"아직 반박하지 않은 주장: "+miss.map(n=>CLAIM_NAMES[n]).join(", "):"네 가지 주장을 모두 반박했어요!"));
+  if(r?.cheer)out.append(el("p","rv-cheer",String(r.cheer)));
+}
+
+const cardsEl=$("#cards");
+CARDS.forEach(c=>{
+  const b=document.createElement("button");b.type="button";b.className="card";
+  b.innerHTML='<span class="yr"></span><span class="t"></span><span class="d"></span><span class="add">+ 근거 칸에 넣기</span>';
+  b.querySelector(".yr").textContent=c.yr;b.querySelector(".t").textContent=c.t;b.querySelector(".d").textContent=c.d;
+  b.onclick=()=>{
+    const name=c.t+"("+c.yr+")";
+    const target=mode==="free"?f1:s2;
+    target.value=target.value.trim()?target.value.trim()+", "+name:name;
+    updateChecks();(mode==="free"?f1:s3).focus();
+  };
+  cardsEl.append(b);
+});
+
+[s1,s2,s3,f1].forEach(t=>t.addEventListener("input",updateChecks));
+[s3,f1].forEach(t=>t.addEventListener("keydown",e=>{if(e.key==="Enter"&&(e.ctrlKey||e.metaKey)){e.preventDefault();send(currentText(),true)}}));
+$("#form").addEventListener("submit",e=>{e.preventDefault();send(currentText(),true)});
+$("#modeSteps").onclick=()=>setMode("steps");$("#modeFree").onclick=()=>setMode("free");
+document.querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>send(b.dataset.q,false));
+endBtn.onclick=review;
+$("#resetBtn").onclick=()=>{ctl?.abort();reset();if(available)setBusy(false)};
+$("#bigBtn").onclick=e=>{const on=document.documentElement.classList.toggle("big");e.target.textContent=on?"글씨 보통":"글씨 크게";try{localStorage.setItem("big",on?"1":"")}catch(_){}};
+try{if(localStorage.getItem("big")){document.documentElement.classList.add("big");$("#bigBtn").textContent="글씨 보통"}}catch(_){}
+
+reset();updateChecks();
+(async()=>{
+  try{sample=window.claude?await window.claude.use("sample"):null}catch(_){sample=null}
+  if(!sample)disableAI("이 화면에서는 AI가 대답할 수 없어요. claude.ai에 로그인한 상태로 열어 주세요. 근거 노트는 그대로 볼 수 있어요.");
+})();
+</script>
